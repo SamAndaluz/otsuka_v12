@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="res_company_branch_view" model="ir.ui.view">
+            <field name="name">res.company.branch.form</field>
+            <field name="model">res.company.branch</field>
+            <field name="arch" type="xml">
+                <form name="Company Branch">
+                    <sheet>
+                        <group name="branch">
+                            <group name="branch_name">
+                                <field name="name"/>
+                            </group>
+                            <group name="branch_code">
+                                <field name="code"/>
+                            </group>
+<!--                            <group name="company">-->
+<!--                                <field name="company_id"/>-->
+<!--                            </group>-->
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="company_branch_list_view" model="ir.ui.view">
+            <field name="name">res.company.branch.list</field>
+            <field name="model">res.company.branch</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+<!--                    <field name="company_id"/>-->
+                </tree>
+            </field>
+        </record>
+        
+
+        <record id="action_company_branches" model="ir.actions.act_window">
+            <field name="name">Companies Branches</field>
+            <field name="res_model">res.company.branch</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a New Branch.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_company_branch" name="Companies Branches" parent="base.menu_users" action="action_company_branches"/>
+            
+    </data>
+</odoo>

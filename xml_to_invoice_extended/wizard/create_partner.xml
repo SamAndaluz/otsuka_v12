@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="create_partner_view_form" model="ir.ui.view">
+        <field name="name">Crear contactos</field>
+        <field name="model">create.partner</field>
+        <field name="arch" type="xml">
+            <form string="Crear contactos">
+                <sheet>
+                    <group>
+                        <span>Los contactos seleccionados se crearán en el módulo de Contactos.</span>
+                    </group>
+                </sheet>
+                <footer>
+                    <group>
+                        <span>
+                            <button string="Crear" type="object" class="oe_highlight" name="create_partners"/>
+                            <button string="Cancelar" class="oe_link" special="cancel" />
+                        </span>
+                    </group>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="create_partner_form_action" model="ir.actions.act_window">
+        <field name="name">Crear contactos</field>
+        <field name="res_model">create.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

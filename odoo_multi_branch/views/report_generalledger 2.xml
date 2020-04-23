@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_generalledger_company_branch" inherit_id="account.report_generalledger">
+        <xpath expr="//t/t[4]/div/div[1]/div[3]" position="after">
+            <t t-if="data['branch_id'] != []">
+                <div class="col-xs-12">
+                    <strong>Branch:</strong>
+                    <p t-esc="data['branch_id'].name"/>
+                </div>
+            </t>
+        </xpath>
+    </template>
+    
+</odoo>

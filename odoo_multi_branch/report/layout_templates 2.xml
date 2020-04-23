@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="external_layout_inherit_company_branch" inherit_id="web.external_layout">
+            <xpath expr="//t[@t-if][1]" position="after">
+                <t t-if="o and 'company_branch_id' in o">
+                    <t t-set="branch" t-value="o.company_branch_id.sudo()"/>
+                </t>
+                <t t-if="not o or not 'company_branch_id' in o">
+                    <t t-set="branch" t-value="res_branch"/>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="external_layout_header_inherit_company_branch" inherit_id="web.external_layout_standard">
+            <xpath expr="//div[@t-field='company.partner_id']" position="after">
+                <t t-if="o and 'company_branch_id' in o">
+                        <p>Branch:<span t-field="branch.name"/></p>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="internal_layout_inherit_company_branch" inherit_id="web.internal_layout">
+            <xpath expr="//t[@t-if][1]" position="after">
+                <t t-if="o and 'company_branch_id' in o">
+                    <t t-set="branch" t-value="o.company_branch_id.sudo()"/>
+                </t>
+                <t t-if="not o or not 'company_branch_id' in o">
+                    <t t-set="branch" t-value="res_branch"/>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="internal_layout_header_inherit_company_branch" inherit_id="web.internal_layout">
+            <xpath expr="//div[1]/div/div[2]" position="inside">
+                <t t-if="o and 'company_branch_id' in o">
+                        Branch:<span t-field="branch.name"/>
+                </t>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

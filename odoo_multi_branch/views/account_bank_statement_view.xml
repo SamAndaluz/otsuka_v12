@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_bank_statement_form_inherit_company_branch" model="ir.ui.view">
+            <field name="name">account.bank.statement.inherit.company.branch</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="company_branch_id" groups="odoo_multi_branch.group_multi_branches"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

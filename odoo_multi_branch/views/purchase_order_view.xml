@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_purchase_order_form_company_branch" model="ir.ui.view">
+            <field name="name">purchase.order.company.branch</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='account_analytic_id']" position="after">
+                    <field name="company_branch_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="company_branch_id" groups="odoo_multi_branch.group_multi_branches"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_purchase_order_filter_company_branch" model="ir.ui.view">
+            <field name="name">purchase.order.company.branch</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <field name="company_branch_id" groups="odoo_multi_branch.group_multi_branches"/>
+                </xpath>
+                <xpath expr="//search" position="inside">
+                    <filter name="company_branch_id" string="Branch" domain="[]" context="{'group_by':'company_branch_id'}"/>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

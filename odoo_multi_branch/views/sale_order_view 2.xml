@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_order_form_company_branch" model="ir.ui.view">
+            <field name="name">sale.order.company.branch</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='analytic_account_id']" position="after">
+                    <field name="company_branch_id" groups="odoo_multi_branch.group_multi_branches"/>
+                </xpath>
+                <xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='analytic_tag_ids']" position="before">
+                    <field name="company_branch_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//notebook/page/field[@name='order_line']/form/group/group[2]/field[@name='tax_id']" position="before">
+                    <field name="company_branch_id" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_sales_order_filter_inherit_company_branch" model="ir.ui.view">
+            <field name="name">sale.order.filter.company.branch</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                     <field name="company_branch_id" groups="odoo_multi_branch.group_multi_branches"/>
+                </xpath>
+                <xpath expr="//group" position="inside">
+                     <filter name="company_branch_id" string="Branch" context="{'group_by':'company_branch_id'}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

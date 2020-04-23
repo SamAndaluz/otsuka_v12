@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+approval_partner,approval_partner,model_approval_partner,base.group_user,1,1,1,1
+approval_product,approval_product,model_approval_product,base.group_user,1,1,1,1

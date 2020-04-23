@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="report_financial_sheet_inherit_company_branch" model="ir.ui.view">
+        <field name="name">Accounting Report Company Branch</field>
+        <field name="model">accounting.report</field>
+        <field name="inherit_id" ref="account.accounting_report_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form/group" position="after">
+                <group>
+                    <field name="company_branch_id"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    
+</odoo>

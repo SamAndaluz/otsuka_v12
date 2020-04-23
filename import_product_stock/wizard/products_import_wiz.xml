@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="import_products_wiz_view" model="ir.ui.view">
+        <field name="name">Products</field>
+        <field name="model">import.products.wiz</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Products">
+                <group col="4" colspan="4">
+                    <field name="products_upload" filename="name"
+                           attrs="{'invisible':[('is_completed','=',True)]}"/>
+                    <field name="type" required="1"
+                           attrs="{'invisible':[('is_completed','=',True)]}"/>
+                    <field name="is_completed" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                    <field name="button_visible" invisible="1"/>
+                </group>
+                <group col="4" colspan="4">
+                    <field name="log_file_name" invisible="1"/>
+                    <field name="log_file" filename="log_file_name"
+                           readonly="1"
+                           attrs="{'invisible':[('is_completed','=',False)]}"/>
+                </group>
+                <newline/>
+                <group col="4" colspan="4">
+                    <group col="2" colspan="2">
+                        <h2 style="color:black;">
+                            <u>Note</u>
+                        </h2>
+                        <newline/>
+                        <ul>
+                            <li style="color:blue;">File format must be
+                                .csv(comma delimated)
+                            </li>
+                            <li style="color:blue;">Please follow the below
+                                format of the csv.file.
+                            </li>
+                        </ul>
+                    </group>
+                </group>
+                <h2 style="color:black;">
+                    <u>Sample Files</u>
+                </h2>
+                <group>
+                    <button name="show_link_download" type="object"
+                            string="Download Sample Files"
+                            class="fa fa-download btn-danger"
+                            attrs="{'invisible': [('button_visible','=',True)]}"
+                             context="{'default_button_visible': False}"/>
+                    <newline/>
+                    <ul style="list-style-type:disc"
+                        attrs="{'invisible': [('button_visible','!=',True)]}">
+                        <li>Add/Update :
+                            <field name="add_update_file"
+                                   filename="add_update_file_name"/>
+                            <field name="add_update_file_name" invisible="1"/>
+                        </li>
+                        <li>Adjustments :
+                            <field name="adjustments_file"
+                                   filename="adjustments_file_name"/>
+                            <field name="adjustments_file_name" invisible="1"/>
+                        </li>
+                        <li>Subtract :
+                            <field name="subtract_file"
+                                   filename="subtract_file_name"/>
+                            <field name="subtract_file_name" invisible="1"/>
+                        </li>
+                    </ul>
+                </group>
+                <footer>
+                    <button name="action_import" string="Import"
+                            type="object" class="oe_highlight"/>
+                    or
+                    <button special="cancel" class="oe_link" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_import_products_wiz_view" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">import.products.wiz</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="import_products_wiz_view"/>
+    </record>
+
+    <menuitem id="import_product_stock.import_products_menu"
+              name="Products Import" parent="sale.menu_sales_config"
+              action="action_import_products_wiz_view" sequence="2"/>
+
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="invoice_form_inherit_form_company_branch" model="ir.ui.view">
+            <field name="name">account.invoice.inherit.company.branch</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page/field[@name='invoice_line_ids']/tree/field[@name='account_analytic_id']" position="after">
+                    <field name="company_branch_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//notebook/page[@name='other_info']/group/group/field[@name='company_id']" position="after">
+                    <field name='company_branch_id' groups="odoo_multi_branch.group_multi_branches"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="invoice_supplier_form_inherit_company_branch" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.inherit.company.branch</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='other_info']/group/group/field[@name='company_id']" position="after">
+                    <field name="company_branch_id" groups="odoo_multi_branch.group_multi_branches"/>
+                </xpath>
+                <xpath expr="//notebook/page/field[@name='invoice_line_ids']/tree/field[@name='account_analytic_id']" position="after">
+                    <field name="company_branch_id" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_account_invoice_filter_inherit_company_branch" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.inherit.company.branch</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <field name="company_branch_id" groups="odoo_multi_branch.group_multi_branches"/>
+                </xpath>
+                <xpath expr="//search/group" position="inside">
+                    <filter name="company" string="Branch" context="{'group_by':'company_branch_id'}"/>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

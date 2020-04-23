@@ -1,0 +1,101 @@
+Barcode,Internal_Reference,Product_Name,Quantity,Sale_Price,Cost_Price,Category,Suppliers
+GT2S,GT2S, VGT POWER 2X2S ADAPTER 6,6,50,6.9,SRC,"vimal,Vishal"
+ABC,AEV,MI Not 5,5,15000,10000,ALL,"Arpit,Amit,Ketan"
+,GTYK,MI TV,,,22000,SRC,
+KSY,,LG TV,8,15000,10000,ALL,"Utkarsh,Bhavesh,Nayan"
+V25LA,MVR,Pizza,200,60,40,ALL,Agrolit
+AHF,AHRE,Past,70,150,63,SRC,"ASUSTeK,My Company, Chicago"
+KRE,,MI A+,,,,,
+,,PenDraiv Sony,5,15000,1650,SRC,
+65RT,LKD,PenDraiv Pen 4 GB,5,1500,350,,
+T25KE,,PenDraiv Sony 32 GB,5,15000,,SRC,
+,,Gio Phone ,5,,987,SRC,"Arpit,Amit,Ketan"
+AD9T2,SFT52,Leptop Lenovo,5,15000,1200,,
+ABCR,,Phone Lenovo Black,5,1550,,SRC,
+,,Phone Lenovo Blue,5,,954,SRC,Agrolit
+TRY4,,Car Red,5,15100,8728,SRC,
+,AY4R,Car Blue,5,,987,SRC,
+TY54,,Car Black,5,15000,,SRC,
+QYET,VRE5,Baike Honda Red,5,,98,,
+,,Baike Honda,5,15000,5980,SRC,"Arpit,Amit,Ketan"
+EYR87,,Bike Hero,5,,,,
+PE95W,LWF95,Baike Bajaj,5,100,85,SRC,Agrolit
+,,Car Tata,5,15000,5100,ALL,
+WURF,MEI52,HondaCity,5,,,,
+LGD,KRE58Q,MI Z+,5,1100,945,ALL,Agrolit
+,,MI Y2,5,1500,,SRC,
+TU54,,MI K5,5,,780,,
+,OER47,MI 5 A ,5,15030,,ALL,
+POT5,,IPhone 5,5,15000,1800,SRC,"ASUSTeK,My Company, Chicago"
+,AKE,IPhone 6,5,,650,ALL,
+LRE8,,IPhone 7,5,1504,1900,SRC,"Arpit,Amit,Ketan"
+,AKD,IPhone 8,5,1504,1000,ALL,
+PE7,LDKS,,,,844,ALL,
+LLF5,,GTS ABC,5,1570,,SRC,"Arpit,Amit,Ketan"
+,AOED5,GTS ABCs,5,150,159,ALL,
+,LAKE8,,5,,789,,
+WE98,,GTS ABC55,,10,5,SRC,"Arpit,Amit,Ketan"
+,,GTS ABC96,5,140,,ALL,
+,APR4,Oppo V9,,,870,,
+AEW65,,,5,15000,4111,SRC,"ASUSTeK,My Company, Chicago,Arpit,Amit,Ketan"
+,APEF,ABC,5,180,20,ALL,
+,,ABC A,5,,85,,
+LKG54,,ABC A +,5,180,10000,SRC,"Arpit,Amit,Ketan"
+,PWE98,ABC V+,5,132,74,ALL,
+,,,,,,ALL,
+LEW89,,ABC O+,5,152,85,SRC,"ASUSTeK,My Company, Chicago,Arpit,Amit,Ketan"
+,QOE98,JAVA Books 3 Edition,5,170,140,ALL,
+,APED8,JAVA Books 4 Edition,5,,1040,ALL,
+LDS54,,JAVA Books 5 Edition,,1790,890,SRC,"Arpit,Amit,Ketan"
+,LSAL74,JAVA Books 6 Edition,5,158,785,ALL,
+,APE54,JAVA Books 6.2 Edition,,170,45,,
+ERT54,,,5,,,SRC,"ASUSTeK,My Company, Chicago,Arpit,Amit,Ketan"
+APW,,JAVA Books 7 Edition,5,170,140,ALL,
+,,JAVA Books 8 Edition,,190,,,
+ARW87,,,5,157,,SRC,"ASUSTeK,My Company, Chicago"
+,,,5,,456,ALL,
+,KAE74,,5,150,120,,
+PRO985,,Paython Books 3 Edition,,158,140,SRC,"ASUSTeK,My Company, Chicago"
+,KEF,Paython Books 2 Edition,5,,54,ALL,"ASUSTeK,My Company, Chicago"
+,LAST,Paython Books 4 Edition,,158,1200,,
+TRY65,,Paython Books 5 Edition,5,158,,SRC,"Arpit,Amit,Ketan"
+,ALDR,Paython Books 6 Edition,5,1570,1420,ALL,
+,APEFe,Paython Books 7 Edition,5,,45,,
+LDJ45,,Paython Books 9 Edition,5,1700,,SRC,"Arpit,Amit,Ketan"
+,LDYE,,,,457,ALL,
+,AKE98,ODOO Books 3 Edition,5,15000,645,ALL,
+58ARTY,,ODOO Books 1th Edition,5,180,120,SRC,"ASUSTeK,My Company, Chicago"
+,,ODOO Books 2 Edition,5,,500,ALL,
+APE9,AKE87,ODOO Books 3 Edition,5,15000,1520,,
+5TR4,ALE34,,,113,99,SRC,"Arpit,Amit,Ketan"
+NS41,MJL4,IPhone 8,5,,780,ALL,
+,PLL,ODOO Books 5 Edition,5,15000,1000,,
+Pel52,PL4,ODOO Books 6 Edition,,498,321,SRC,"Arpit,Amit,Ketan"
+,AKD34,ODOO Books 7 Edition,5,,,,
+,AKEAE,ODOO Books 9 Edition,5,678,600,ALL,
+PWE85,,Game ABC,5,937,537,SRC,"Arpit,Amit,Ketan"
+,AKDWQ,Game ABCD,,831,854,,
+,AKE7,Game ABCp,5,15000,891,ALL,
+PW45,,,,,78,SRC ,"ASUSTeK,My Company, Chicago"
+,AKDAS,Game ABCPA,5,,,,
+,AKEK56,Game ABC+,5,1800,785,ALL,
+65AFS,,,,,,SRC,"Arpit,Amit,Ketan"
+,AKDEW7,Game A+,5,480,,ALL,
+,AKE74h,,5,470,254,ALL,
+KEZ65,,Game ABCOP,5,30,,SRC,"Arpit,Amit,Ketan"
+QUE,AKDS4,,5,,560,ALL,
+,AKE4,Game ABCV9,5,7950,,ALL,
+URF8,,,,7620,3700,SRC,"Arpit,Amit,Ketan"
+,AKDA,Game A*,5,15000,950,,
+,AKEAS,Game ABCpa,5,15000,,ALL,
+UTFF,,,5,,830,SRC,"ASUSTeK,My Company, Chicago"
+,AKD98Z,Game ABC89,5,15000,,,
+,AKEE8,Game XYZ,5,,780,ALL,
+ALV,,,,85,,SRC,"Arpit,Amit,Ketan"
+,AKDA72,Game VCTY,5,,450,,Agrolit
+,AKEZ5,,5,8741,,ALL,
+SSI,,Game AB+,5,,32,SRC,"ASUSTeK,My Company, Chicago,Arpit,Amit,Ketan"
+,AKDHG,,,,,,
+,AKEA99,Game A9C,5,780,300,ALL,
+,,Game A2CB,5,21,,SRC,"ASUSTeK,My Company, Chicago"
+ASD,FHESA,ghj,10,,,,

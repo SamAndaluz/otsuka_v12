@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_analytic_inherit_form_company_branch" model="ir.ui.view">
+            <field name="name">account.analytic.account.inherit.company.branch</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="company_branch_id" groups="odoo_multi_branch.group_multi_branches"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_account_analytic_account_search_inherit_branch" model="ir.ui.view">
+            <field name="name">account.analytic.account.inherit.company.branch</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <field name="company_branch_id" groups="odoo_multi_branch.group_multi_branches"/>
+                </xpath>
+                <xpath expr="//search/group" position="inside">
+                    <filter name="company_branch_id" string="Branch" domain="[]" context="{'group_by':'company_branch_id'}"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_account_analytic_line_form_inherit_branch" model="ir.ui.view">
+            <field name="name">account.analytic.line.inherit.company.branch</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="company_branch_id" groups="odoo_multi_branch.group_multi_branches"/>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

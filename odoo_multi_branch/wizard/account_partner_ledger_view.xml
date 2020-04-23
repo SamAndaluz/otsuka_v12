@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_partnerledger_inherit_company_branch" model="ir.ui.view">
+        <field name="name">Accountinng Partner Ledger Company Branch</field>
+        <field name="model">account.report.partner.ledger</field>
+        <field name="inherit_id" ref="account.account_report_partner_ledger_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form/group[2]" position="after">
+                <group>
+                    <field name="company_branch_id"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

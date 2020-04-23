@@ -1,0 +1,82 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    
+    <record model="ir.ui.view" id="import_bank_statements.list">
+      <field name="name">import_bank_statements list</field>
+      <field name="model">import.bank.statement</field>
+      <field name="arch" type="xml">
+          <form>
+              <sheet>
+                <p class="oe_grey" style="color:blue;">
+                    <b>
+                        Seleccione el banco al que pertenecen los estados de cuenta del archivo a cargar. El banco seleccionado debe tener configurado un método de carga y un prefijo para nombre de archivo.
+                    </b>
+                </p>
+                  <group>
+                      <group>
+                          <field name="journal_id"/>
+                          <field name="import_option" widget='radio' options="{'horizontal': true}" force_save="1" invisible="1"/>
+                      </group>
+                      <group>
+                          <!--<field name="date"/>-->
+                          <field name="file_name" invisible="1"/>
+                          <field name="file" widget="binary"  filename="file_name"/>
+                      </group>
+                  </group>
+                  <group>
+                      <button string="Procesar" name="process_file" class="oe_highlight" type="object"/>
+                  </group>
+                  <group>
+                      <field name="line_ids" nolabel="1">
+                          <tree editable="bottom" create="false" default_order="sequence asc">
+                              <field name="sequence" force_save="1" string="No."/>
+                              <field name="name"/>
+                              <field name="date" force_save="1"/>
+                              <field name="partner_id"/>
+                              <field name="ref"/>
+                              <field name="amount" force_save="1"/>
+                          </tree>
+                      </field>
+                  </group>
+                  <footer>
+            <button string="Importar" name="import_statements_new" class="oe_highlight" type="object"/>
+          </footer>
+              </sheet>
+          </form>
+      </field>
+    </record>
+    
+
+    <!-- actions opening views on models -->
+    
+    <record model="ir.actions.act_window" id="import_bank_statements.action_window">
+      <field name="name">Importar Estados de Cuenta</field>
+      <field name="res_model">import.bank.statement</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+    
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="import_bank_statements" id="import_bank_statements.menu_root"/>
+    -->
+    <!-- menu categories -->
+    
+    <menuitem name="Importar Estados de Cuenta" id="import_bank_statements.menu_1" 
+              parent="account_accountant.menu_accounting" 
+              action="import_bank_statements.action_window"/>
+    <!--
+    <menuitem name="Menu 2" id="import_bank_statements.menu_2" parent="import_bank_statements.menu_root"/>
+    -->
+    <!-- actions -->
+    
+    <!--<menuitem name="ARCOS BANCOMER 4316 (MXN)" id="import_bank_statements.submenu_1" 
+              parent="import_bank_statements.menu_1"
+              action="import_bank_statements.action_window"/>-->
+    <!--<menuitem name="Server to list" id="import_bank_statements" parent="import_bank_statements.menu_2"
+              action="import_bank_statements.action_server"/>
+    -->
+  </data>
+</odoo>

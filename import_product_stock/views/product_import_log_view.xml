@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree view of Import Product Log -->
+    <record id="import_product_log_tree_view" model="ir.ui.view">
+        <field name="name">import.product.log.tree.view</field>
+        <field name="model">import.product.log</field>
+        <field name="arch" type="xml">
+            <tree string="Import Product Log" create="false">
+                <field name="create_date" string="Create Date"/>
+                <field name="barcode"/>
+                <field name="product_name"/>
+                <field name="internal_ref"/>
+                <field name="qty"/>
+                <field name="state"/>
+                <field name="error_log"/>
+                <field name="type" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search view of import Product Log -->
+    <record id="import_product_log_search_view" model="ir.ui.view">
+        <field name="name">import.product.log.search.view</field>
+        <field name="model">import.product.log</field>
+        <field name="arch" type="xml">
+            <search string="Import Product Log">
+                <filter name="type" string="Type"/>
+                <group expand="0" string="Group By" colspan="16">
+                    <filter name="group_type" string="Type"
+                            context="{'group_by':'type'}"/>
+                    <filter name="group_state" string="State"
+                            context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- action view of Import Product Log -->
+    <record id="import_product_log_action_view" model="ir.actions.act_window">
+        <field name="name">Import Product Log</field>
+        <field name="res_model">import.product.log</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,search</field>
+        <field name="context">{'search_default_group_type':1,
+            'search_default_group_state':1}
+        </field>
+    </record>
+
+    <!--Import Product Log Call Every day (Using scheduler) -->
+    <record forcecreate="True" id="import_product_log_scheduler"
+            model="ir.cron">
+        <field name="name">Import Product Log Scheduler</field>
+        <field name="model_id" ref="model_import_product_log"/>
+        <field name="state">code</field>
+        <field name="code">model.delete_product_import_log()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+    </record>
+
+    <menuitem id="import_product_stock.product_import_log"
+              name="Import Products Log"
+              parent="sale.menu_sales_config"
+              action="import_product_log_action_view" sequence="3"/>
+</odoo>

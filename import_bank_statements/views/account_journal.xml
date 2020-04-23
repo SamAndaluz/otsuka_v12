@@ -1,0 +1,15 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="view_import_bank_statement_inherit">
+      <field name="name">view_import_bank_statement_inherit</field>
+      <field name="model">account.journal</field>
+      <field name="inherit_id" ref="account.view_account_bank_journal_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='post_at_bank_rec']" position='before'>
+          <field name="import_bank_statement_method" string="Método de carga"/>
+            <field name="import_file_name_prefix"/>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

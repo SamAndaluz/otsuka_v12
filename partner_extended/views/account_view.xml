@@ -1,0 +1,30 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="account_invoice_customer_extended_form">
+          <field name="name">account.invoice.customer.form.custom</field>
+          <field name="model">account.invoice</field>
+          <field name="inherit_id" ref="account.invoice_form"/>
+          <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="options">{'no_create':True, 'no_open': True}</attribute>
+                <attribute name="widget"></attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                <attribute name="options">{'no_create':True, 'no_open': True}</attribute>
+            </xpath>
+          </field>
+      </record>
+      
+      <record model="ir.ui.view" id="account_invoice_supplier_extended_form">
+          <field name="name">account.invoice.supplier.form.custom</field>
+          <field name="model">account.invoice</field>
+          <field name="inherit_id" ref="account.invoice_supplier_form"/>
+          <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="options">{'no_create':True, 'no_open': True}</attribute>
+                <attribute name="widget"></attribute>
+            </xpath>
+          </field>
+      </record>
+    </data>
+</odoo>

@@ -1,0 +1,74 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="partner_extended_form">
+          <field name="name">partner.extended.form</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form"/>
+          <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales_purchases']//field[@name='customer']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='sales_purchases']//field[@name='supplier']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+          </field>
+      </record>
+      
+      <record model="ir.ui.view" id="partner_extended_form_is_customer_readonly">
+          <field name="name">partner.extended.form.is.customer.readonly</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form"/>
+          <field name="groups_id" eval="[(6, 0, [ref('partner_extended.group_set_is_customer') ])]"/>
+          <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales_purchases']//field[@name='customer']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+          </field>
+      </record>
+
+      <record model="ir.ui.view" id="partner_extended_form_is_vendor_readonly">
+          <field name="name">partner.extended.form.is.vendor.readonly</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form"/>
+          <field name="groups_id" eval="[(6, 0, [ref('partner_extended.group_set_is_vendor') ])]"/>
+          <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales_purchases']//field[@name='supplier']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+          </field>
+      </record>
+      
+    <record model="ir.ui.view" id="view_contact_custom_tree">
+      <field name="name">view_contact_custom_tree</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="groups_id" eval="[
+                                      (6, 0, [ref('partner_extended.group_set_is_vendor') ]),
+                                      (6, 0, [ref('partner_extended.group_set_is_customer') ])]"/>
+      <field name="arch" type="xml">
+        <xpath expr='//tree' position='attributes'>
+            <attribute name="edit">true</attribute>
+            <attribute name="create">true</attribute>
+            <attribute name="delete">true</attribute>
+        </xpath>
+      </field>
+    </record>
+      
+    <record model="ir.ui.view" id="view_contact_custom_kanban">
+      <field name="name">view_contact_custom_kanban</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+        <field name="groups_id" eval="[
+                                      (6, 0, [ref('partner_extended.group_set_is_vendor') ]),
+                                      (6, 0, [ref('partner_extended.group_set_is_customer') ])]"/>
+      <field name="arch" type="xml">
+        <xpath expr='//kanban' position='attributes'>
+            <attribute name="edit">true</attribute>
+            <attribute name="create">true</attribute>
+            <attribute name="delete">true</attribute>
+        </xpath>
+      </field>
+    </record>
+      
+  </data>
+</odoo>

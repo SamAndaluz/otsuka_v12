@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_trialbalance_company_branch" inherit_id="account.report_trialbalance">
+
+        <xpath expr="//t/t/div/div" position="after">
+            <t t-if="data['branch_id'] != []">
+                <div class="row mt32">
+                    <div class="col-xs-12">
+                        <strong>Branch:</strong>
+                        <p t-esc="data['branch_id'].name"/>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+        
+
+    </template>
+</odoo>

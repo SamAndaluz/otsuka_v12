@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_saleorder_document_inherit_branch" inherit_id = "sale.report_saleorder_document">
+            <xpath expr="//div[@id='informations']" position="inside">
+                <div t-if="doc.company_branch_id" class="col-xs-3">
+                    <strong>Branch:</strong>
+                    <p t-field="doc.company_branch_id"/>
+                </div>
+            </xpath>
+<!--            <xpath expr="//t/div/t[2]/table/thead/tr/th[1]" position="after">-->
+<!--                <t t-if="doc.company_branch_id">-->
+<!--                    <th>Branch</th>-->
+<!--                </t>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//t/div/t[2]/table/tbody/t/t[2]/tr/td[1]" position="after">-->
+<!--                <t t-if="doc.company_branch_id">-->
+<!--                    <td>-->
+<!--                        <span t-field="l.company_branch_id"/>-->
+<!--                    </td>-->
+<!--                </t>-->
+<!--            </xpath>-->
+        </template>
+    </data>
+</odoo>
+

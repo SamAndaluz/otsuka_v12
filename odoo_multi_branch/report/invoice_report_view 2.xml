@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_invoice_document_inherit_branch" inherit_id = "account.report_invoice_document">
+            <xpath expr="//div[@class='row mt32 mb32']" position="inside">
+                <div class="col-xs-2" t-if="o.company_branch_id">
+                    <strong>Branch:</strong>
+                    <p t-field="o.company_branch_id"/>
+                </div>
+            </xpath>
+            <!--
+            <xpath expr="//table[@name='invoice_line_table']/thead/tr/th" position="after">
+                <th t-if="o.company_branch_id">
+                    <strong>Branch</strong>
+                </th>
+            </xpath>
+            <xpath expr="//table[@name='invoice_line_table']/tbody/tr/td" position="after">
+                <td><span t-field="l.company_branch_id"/></td>
+            </xpath>
+            -->
+        </template>
+    </data>
+</odoo>
+

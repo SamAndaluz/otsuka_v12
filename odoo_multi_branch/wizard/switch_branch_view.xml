@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="switch_branch_wiz_form" model="ir.ui.view">
+            <field name="name">switch.branch.wiz.form</field>
+            <field name="model">switch.branch.wiz</field>
+                <field name="arch" type="xml">
+                    <form string="Switch Branch">
+                        <group>
+                            <group>
+                                <field name="current_branch_id"/>
+                                <field name="allow_branches_ids" widget="many2many_tags"/>
+                            </group>
+                            <group>
+                                <field name="switch_branch_id" domain="[('id', 'in', allow_branches_ids)]"/>
+                            </group>
+                        </group>
+                        <footer>
+                            <button name="action_switch_branch" type="object" string="Switch Branch" class="btn-primary"/>
+                            or
+                            <button string="_Cancel" class="btn-default" special="cancel" />
+                        </footer>
+                    </form>
+                </field>
+        </record>
+
+        <record id="action_switch_branch_wiz" model="ir.actions.act_window">
+            <field name="name">Switch Branch</field>
+            <field name="res_model">switch.branch.wiz</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="switch_branch_wiz_form"/>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="switch_branch_menu" name="Switch Branch" action="action_switch_branch_wiz"/>
+
+   </data>
+</odoo>

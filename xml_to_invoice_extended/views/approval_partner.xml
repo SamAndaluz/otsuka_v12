@@ -1,0 +1,178 @@
+<odoo>
+  <data>
+    
+    <record model="ir.ui.view" id="approval_partner_list">
+      <field name="name">approval_partner list</field>
+      <field name="model">approval.partner</field>
+      <field name="arch" type="xml">
+        <tree create="false">
+          <field name="name"/>
+          <field name="vat"/>
+          <field name="property_account_position_id"/>
+          <field name="property_payment_term_id"/>
+        </tree>
+      </field>
+    </record>
+      
+    <record model="ir.ui.view" id="approval_partner_form">
+      <field name="name">approval_partner form</field>
+      <field name="model">approval.partner</field>
+      <field name="arch" type="xml">
+          <form>
+              <header>
+                  <button name="create_partner" string="Aprobar contacto" class="oe_highligth" type="object"/>
+              </header>
+              <sheet>
+                  <group>
+                      <group>
+                          <field name="name"/>
+                          <field name="vat"/>
+                          <!--<field name="customer"/>-->
+                      </group>
+                      <group>
+                          <field name="property_account_position_id"/>
+                          <field name="property_payment_term_id"/>
+                          <!--<field name="supplier"/>-->
+                      </group>
+                  </group>
+              </sheet>
+          </form>
+      </field>
+    </record>
+      
+      <record model="ir.ui.view" id="approval_product_list">
+      <field name="name">approval_product list</field>
+      <field name="model">approval.product</field>
+      <field name="arch" type="xml">
+        <tree create="false">
+          <field name="name"/>
+          <field name="list_price"/>
+          <field name="default_code"/>
+          <field name="type"/>
+            <field name="l10n_mx_edi_code_sat_id"/>
+            <field name="uom_id"/>
+            <field name="uom_po_id"/>
+        </tree>
+      </field>
+    </record>
+      
+    <record model="ir.ui.view" id="approval_product_form">
+      <field name="name">approval_product form</field>
+      <field name="model">approval.product</field>
+      <field name="arch" type="xml">
+          <form>
+              <header>
+                  <button name="link_product" string="Asociar producto" class="oe_highligth" type="object"/>
+                  <button name="create_product" string="Crear producto" class="oe_highligth" type="object"/>
+              </header>
+              <sheet>
+                  <group>
+                      <group>
+                          <field name="name"/>
+                          <field name="standard_price"/>
+                          <field name="list_price"/>
+                          <field name="default_code"/>
+                          <field name="type"/>
+                      </group>
+                      <group>
+                          <field name="l10n_mx_edi_code_sat_id"/>
+                            <field name="uom_id"/>
+                            <field name="uom_po_id"/>
+                      </group>
+                  </group>
+                  <group>
+                      <group>
+                          <field name="product_id"/>
+                      </group>
+                  </group>
+              </sheet>
+          </form>
+      </field>
+    </record>
+      
+    <record model="ir.actions.act_window" id="approval_partner_customer_action_window">
+      <field name="name">Clientes por combinar</field>
+      <field name="res_model">approval.partner</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('customer', '=', True)]</field>
+    </record>
+      
+    <record model="ir.actions.act_window" id="approval_partner_supplier_action_window">
+      <field name="name">Proveedores por combinar</field>
+      <field name="res_model">approval.partner</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('supplier', '=', True)]</field>
+    </record>
+      
+    <record model="ir.actions.act_window" id="approval_product_action_window">
+      <field name="name">Productos por aprobar</field>
+      <field name="res_model">approval.product</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--
+    <record model="ir.actions.act_window" id="res_partner_mix_action_window">
+      <field name="name">Contactos</field>
+      <field name="res_model">res.partner</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('customer', '=', True),('vat','in',self.env['partner.mix'].search([]).ids)]</field>
+    </record>
+      
+      <act_window id="action_create_all_partner"
+        name="Crear contactos"
+        src_model="approval.partner"
+        res_model="create.partner"
+        view_type="form" view_mode="form"
+        key2="client_action_multi" target="new"/>
+    -->
+      
+    <record model="ir.actions.server" id="show_specific_partners">
+        <field name="name">Res Partner Server Action</field>
+        <field name="model_id" ref="model_approval_partner"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.filter_partner()
+        </field>
+    </record>
+    
+    <!--
+    <menuitem id="xml_to_invoice_extended.menu_account_pendientes" 
+              name="Pendientes" 
+              parent="account.menu_finance" 
+              sequence="2"/>
+      
+    <menuitem name="Contactos por combinar" 
+              string="Contactos por combinar" 
+              id="partner_mix_menu" 
+              action="xml_to_invoice_extended.show_specific_partners" 
+              parent="xml_to_invoice_extended.menu_account_pendientes" 
+              sequence="16"
+              groups="partner_extended.group_set_is_customer,partner_extended.group_set_is_vendor"/>
+
+    <menuitem name="Productos por aprobar" 
+              id="approval_product_menu_1" 
+              action="xml_to_invoice_extended.approval_product_action_window" 
+              parent="xml_to_invoice_extended.menu_account_pendientes" 
+              sequence="17" 
+              groups="product_extended.group_create_product"/>
+      -->
+      
+    
+    <menuitem name="Contactos por combinar" 
+              string="Contactos por combinar" 
+              id="partner_mix_menu" 
+              action="show_specific_partners" 
+              parent="account.menu_finance_receivables" 
+              sequence="16"
+              groups="partner_extended.group_set_is_customer,partner_extended.group_set_is_vendor"/>
+
+    <menuitem name="Productos por aprobar" 
+              id="approval_product_menu_1" 
+              action="approval_product_action_window" 
+              parent="account.menu_finance_receivables" 
+              sequence="17" 
+              groups="product_extended.group_create_product"/>
+    
+
+  </data>
+</odoo>

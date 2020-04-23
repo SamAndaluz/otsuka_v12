@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="procurement_group_form_view_inherit_company_branch" model="ir.ui.view">
+            <field name="name">procurement.group.inherit.company.branch</field>
+            <field name="model">procurement.group</field>
+            <field name="inherit_id" ref="stock.procurement_group_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='move_type']" position="after">
+                    <field name="company_branch_id" groups="odoo_multi_branch.group_multi_branches"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

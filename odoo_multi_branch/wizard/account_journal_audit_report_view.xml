@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="report_account_common_report_view_inherit_company_branch" model="ir.ui.view">
+        <field name="name">Accounting Print inherit branch id Report</field>
+        <field name="model">account.print.journal</field>
+        <field name="inherit_id" ref="account.account_common_report_view"/>
+        <field name="arch" type="xml">
+            <data>
+            <xpath expr="/form/group" position="after">
+                <group>
+                    <field name="company_branch_id"/>
+                </group>
+            </xpath>
+            </data>
+        </field>
+    </record>
+
+    
+</odoo>

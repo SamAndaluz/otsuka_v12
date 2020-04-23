@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_picking_inherit_branch" inherit_id = "stock.report_picking">
+            <xpath expr="//t/t/t/div/div[2]" position="after">
+                <t t-if="o.company_branch_id"><strong>Branch</strong></t>
+                <span t-field="o.company_branch_id"/>
+            </xpath>
+            <!--
+            <xpath expr="//table[hasclass('table-condensed')][2]/thead/tr/th" position="after">
+                <th><strong>Branch</strong></th>
+            </xpath>
+            <xpath expr="//table[hasclass('table-condensed')][2]/tbody/tr/td" position="after">
+                <td t-if="move.company_branch_id">
+                    <span t-field="move.company_branch_id"/>
+                </td>
+            </xpath>-->
+        </template>
+    </data>
+</odoo>
+
