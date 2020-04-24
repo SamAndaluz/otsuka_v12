@@ -66,7 +66,9 @@ class XmlImportWizard(models.TransientModel):
         help='Necesario para crear el mov. de almacén')
     journal_customer_id = fields.Many2one('account.journal',
         string='Diario Clientes',
-        required=True, default=lambda self: self.env['account.journal'].search([('name','=','CLIENTES - Facturas'),('company_id','=',self.env.user.company_id.id)]))
+        required=True, compute="_set_none")
+    def _set_none(self):
+        pass
     payment_journal_customer_id = fields.Many2one('account.journal',
         string='Banco de pago', domain="[('type','=','bank')]")
     line_analytic_tag_customer_ids = fields.Many2many('account.analytic.tag', 
@@ -126,7 +128,7 @@ class XmlImportWizard(models.TransientModel):
         help='Necesario para crear el mov. de almacén', required=False)
     journal_provider_id = fields.Many2one('account.journal',
         string='Diario Proveedores',
-        required=True, default=lambda self: self.env['account.journal'].search([('name','=','PROVEEDORES - Facturas'),('company_id','=',self.env.user.company_id.id)]))
+        required=False, default=lambda self: self.env['account.journal'].search([('name','=','PROVEEDORES - Facturas'),('company_id','=',self.env.user.company_id.id)]))
     payment_journal_provider_id = fields.Many2one('account.journal',
         string='Banco de pago', domain="[('type','=','bank')]")
     line_analytic_tag_provider_ids = fields.Many2many('account.analytic.tag', 
@@ -506,18 +508,24 @@ class XmlImportWizard(models.TransientModel):
             return mensaje
         ######## Valida Serie
         serie = root.get('@Serie') or root.get('@serie')
-        if not serie:
-            mensaje = '{} - El xml no contiene el atributo serie'.format(bill['filename'])
-            return mensaje
+        #if not serie:
+        #    mensaje = '{} - El xml no contiene el atributo serie'.format(bill['filename'])
+        #    return mensaje
         warehouse_id = False
         if invoice_type == 'out_invoice':
-            for line in self.company_id.xml_import_line_ids:
-                if line.xml_import_journal_id.sequence_id.name == serie:
-                    warehouse_id = line.xml_import_warehouse_id.id
-                    break
-            else:
-                mensaje = '{} - No se encontro un diario configurado con la serie {} en la compañia seleccionada. Por favor configure uno.'.format(bill['filename'], serie)
+            serie_found = False
+            if len(self.company_id.xml_import_line_ids) == 0:
+                mensaje = '{} - La compañia actual no tiene configurado un diario para la serie del xml.'.format(bill['filename'])
                 return mensaje
+        
+            #for line in self.company_id.xml_import_line_ids:
+            #    if line.xml_import_journal_id.sequence_id.name == serie:
+            #        warehouse_id = line.xml_import_warehouse_id.id
+            #        serie_found = True
+            #        break
+            #if not serie_found:
+            #    mensaje = '{} - No se encontro un diario configurado con la serie {} en la compañia seleccionada. Por favor configure uno.'.format(bill['filename'], serie)
+            #    return mensaje
         ####### Valida almacén en facturas de provedor
         if invoice_type == 'in_invoice':
             warehouse_id = self.warehouse_provider_id and self.warehouse_provider_id.id or False
@@ -527,10 +535,16 @@ class XmlImportWizard(models.TransientModel):
         ####### Valida factura duplicada
         amount_total = root.get('@Total') or root.get('@total')
         date_invoice = root.get('@Fecha') or root.get('@fecha')
+        no_certificado = root.get('@NoCertificado') or root.get('@nocertificado')
         folio = root.get('@Folio') or root.get('@folio')
         invoice_name = folio
-        if serie:
+        if serie and folio:
             invoice_name = serie + ' ' + folio
+        else:
+            invoice_name = no_certificado
+        #else:
+        #    mensaje = '{} - No existe serie ({}) o folio ({}) en el xml.'.format(bill['filename'], serie, folio)
+        #    return mensaje
         if self.valdiate_duplicate_invoice(rfc_receptor,amount_total,date_invoice,invoice_name):
             mensaje = '{} - Esta factura ya existe en el sistema.'.format(bill['filename'])
             return mensaje
@@ -549,10 +563,10 @@ class XmlImportWizard(models.TransientModel):
                         mensaje = '{} - La clave de undiad {} del XML no está asociada a ninguna unidad de medida del sistema.'.format(bill['filename'], product.get('sat_uom'))
                         return mensaje
         ###### Valida productos
-        products_new = self.get_product_or_create_validation(root['cfdi:Conceptos']['cfdi:Concepto'])
-        if not products_new:
-            mensaje = '{} - Algunos productos en la factura no existen en el sistema, se crearán productos temporales en el menu "Productos por aprobar" que tendrá que validar para poder procesar esta factura.'.format(bill['filename'])
-            return mensaje
+        #products_new = self.get_product_or_create_validation(root['cfdi:Conceptos']['cfdi:Concepto'])
+        #if not products_new:
+        #    mensaje = '{} - Algunos productos en la factura no existen en el sistema, se crearán productos temporales en el menu "Productos por aprobar" que tendrá que validar para poder procesar esta factura.'.format(bill['filename'])
+        #    return mensaje
             
         return False
     
@@ -735,6 +749,7 @@ class XmlImportWizard(models.TransientModel):
                 #raise ValidationError(str(temporal_product))
                 if len(temporal_product) > 0:
                     continue
+                
                 p = self.env['approval.product'].create(product_vals)
                 
                 #raise ValidationError(str(p))
@@ -744,6 +759,71 @@ class XmlImportWizard(models.TransientModel):
             return False
         else:
             return True
+        
+    def get_product_or_create(self, product):
+        """
+        sobrescritura de metodo,
+        buscara el nombre del xml en el campo 'custom_name'
+        de producto,
+        se utilizara un ilike en el dominio
+        luego se separara el valor del campo por el limitador '|'
+        y se buscara que el nombre sea exacto
+        """
+        #print('get_product_or_create')
+        #primero se busca por nombre
+        p = self.env['product.product'].search([
+            ('name', '=', product['name'])
+        ])
+        p = p[0] if p else False
+        
+        if p:
+            return p.id
+
+        #si no se encontro por nombre, se busca por custom_name
+        p = self.env['product.product'].search([
+            ('custom_name', 'ilike', product['name']),
+            ('active', '=', True),
+        ])
+        
+        for rec in p:
+            for name in rec.custom_name.split('|'):
+                if product['name'].lower() == name.strip().lower():
+                    return rec.id
+        # # si no se encontro ninguno incluir datos de producto en 
+        # # mensaje de error
+        # self.products_valid = False
+        # self.products_error_msg += str(product['name']) + "\n"
+        # return False
+        
+        # crear producto si no existe
+        if self.create_product:
+            
+            EdiCode = self.env["l10n_mx_edi.product.sat.code"]
+
+            product_vals = {
+                'name': product['name'],
+                'custom_name': product['name'],
+                'price': product['price_unit'],
+                'default_code': product['product_ref'],
+                'type': 'product',
+            }
+
+            sat_code = EdiCode.search([("code","=",product['sat_product_ref'])])
+            # #print("sat_code = ",sat_code)
+            if sat_code:
+                product_vals["l10n_mx_edi_code_sat_id"] = sat_code[0].id
+
+            uom = self.get_uom(product['sat_uom'])
+            # #print(product['sat_uom'])
+            # #print("uom = ",uom)
+            if uom:
+                product_vals["uom_id"] = uom[0].id
+                product_vals["uom_po_id"] = uom[0].id
+
+            
+            p = self.env['product.product'].create(product_vals)
+            
+        return p.id
     
     def valdiate_duplicate_invoice(self,vat,amount_total,date,invoice_name):
         """
@@ -892,6 +972,7 @@ class XmlImportWizard(models.TransientModel):
             # obtener id del producto
             # crear producto si este no existe
             invoice_line['product_id'] = self.get_product_or_create(invoice_line)
+            
             #raise ValidationError(str('after get_product_or_create'))
             # si el producto tiene impuestos, obtener datos
             # y asignarselos al concepto
@@ -911,7 +992,7 @@ class XmlImportWizard(models.TransientModel):
                         # si la base del impuesto no coincide con el subtotal del producto
                         # es que es gasolina
                         if tax_base != invoice_line['price_subtotal']:
-                            print("es gasolina")
+                            #print("es gasolina")
                             new_price = float(tax_base) / float(invoice_line['quantity'])
                             invoice_line['price_unit'] = new_price
 
@@ -967,7 +1048,7 @@ class XmlImportWizard(models.TransientModel):
                         #retencion['account_id'] = 23
                         tax_code = element.get('@Impuesto','')
                         tax_rate = element.get('@TasaOCuota','0')
-                        tax_factor = taxelementes.get('@TipoFactor','')
+                        tax_factor = element.get('@TipoFactor','')
                         tax_group =  tax_group + tax_code + '|' + tax_rate + '|ret|' + tax_factor + ','
                         #print('tax_group: ',tax_group)
                         #tax = self.get_tax_ids(tax_group)
@@ -1041,7 +1122,7 @@ class XmlImportWizard(models.TransientModel):
                     
                     mensaje = '{} - La unidad de medida ' + str(product.get('sat_uom')) + ' del XML no existe en el sistema.'
                     return False, mensaje
-
+            #raise ValidationError(str(product.get('product_id')))
             self.env['account.invoice.line'].create({
                 'product_id': product.get('product_id'),
                 'invoice_id': draft.id,
@@ -1188,13 +1269,17 @@ class XmlImportWizard(models.TransientModel):
         invoice['type'] = corrected_invoice_type or invoice_type
 
         invoice['name'] = folio
-        if serie:
+        if serie and folio:
             invoice['name'] = serie + ' ' + folio
-        if not folio:
+        else:
             invoice['name'] = no_certificado
 
         invoice['amount_untaxed'] = root.get('@SubTotal') or root.get('@subTotal')
-        invoice['amount_tax'] = root['cfdi:Impuestos']['cfdi:Traslados']['cfdi:Traslado'].get('@Importe')
+        invoice['amount_tax'] = ''
+        #if 'cfdi:Impuestos' in root:
+            #raise ValidationError(str(folio))
+        
+            #invoice['amount_tax'] = root['cfdi:Impuestos']['cfdi:Traslados']['cfdi:Traslado'].get('@Importe')
         invoice['amount_total'] = root.get('@Total') or root.get('@total')
         invoice['partner_id'] = partner_id
         invoice['currency_id'] = currency.id
@@ -1234,7 +1319,8 @@ class XmlImportWizard(models.TransientModel):
         analytic_account_id = False
         warehouse_id = False
         if invoice_type == 'out_invoice':
-            x = 0
+            serie_found = False
+            
             for line in self.company_id.xml_import_line_ids:
                 
                 if line.xml_import_journal_id.sequence_id.name == serie:
@@ -1242,11 +1328,18 @@ class XmlImportWizard(models.TransientModel):
                     analytic_account_id = line.xml_import_analytic_account_id.id
                     warehouse_id = line.xml_import_warehouse_id.id
                     bank_id = line.xml_import_bank_id.id
+                    serie_found = True
                     #if x == 1:
                     #    pass
                     #raise ValidationError(str(line.xml_import_bank_id.id) + ' - ' + str(serie))
                     break
-                x += 1
+            
+            if not serie_found:
+                journal_id = self.company_id.xml_import_line_ids[0].xml_import_journal_id.id
+                analytic_account_id = self.company_id.xml_import_line_ids[0].xml_import_analytic_account_id.id
+                warehouse_id = self.company_id.xml_import_line_ids[0].xml_import_warehouse_id.id
+                bank_id = self.company_id.xml_import_line_ids[0].xml_import_bank_id.id
+                
             # for journal in self.company_id.xml_import_journal_ids:
             #     if journal.sequence_id.name == serie:
             #         journal_id = journal.id

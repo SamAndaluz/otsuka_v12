@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','product','sale','purchase','account'],
+    'depends': ['base','product','sale','purchase','account','prodigia_xml_to_invoice_ext'],
 
     # always loaded
     'data': [

@@ -85,6 +85,7 @@ class approvalProduct(models.Model):
             raise ValidationError('Debe de colocar el coste del producto.')
             
         record = {'name': self.name,
+                  'custom_name': self.name,
                  'price': self.list_price,
                  'standard_price': self.standard_price,
                  'default_code': self.default_code,
