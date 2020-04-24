@@ -5,6 +5,8 @@ from odoo import models, fields, api
 class ProductExtended(models.Model):
     _inherit = ['product.template']
     
+    custom_name = fields.Char(string='Nombres anteriores', required=False)
+    
     @api.model
     def create(self, vals):
         if vals.get('name', False):
